@@ -3,6 +3,7 @@ package com.java.fx.Util;
 import javafx.util.StringConverter;
 
 import java.security.MessageDigest;
+import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -65,6 +66,10 @@ public class StringUtil {
         return Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
+    public static LocalDate stringToLocalDate(String date, DateTimeFormatter format) {
+        return dateToLocalDate(stringToDate(date, format));
+    }
+
     public static Date stringToDate(String date) {
         return stringToDate(date, SIMPLE_DATE_FORMAT);
     }
@@ -83,6 +88,14 @@ public class StringUtil {
 
     public static String dateToString(Date date) {
         return dateToString(date, SIMPLE_DATE_FORMAT);
+    }
+
+    public static String localDateToString(LocalDate date) {
+        return localDateToString(date, SIMPLE_DATE_FORMAT);
+    }
+
+    public static String localDateToString(LocalDate date, DateTimeFormatter dateFormat) {
+        return date.format(dateFormat);
     }
 
     public static String dateToString(Date date, DateTimeFormatter format) {

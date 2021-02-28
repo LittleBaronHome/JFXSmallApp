@@ -2,7 +2,7 @@ package com.java.fx.Action;
 
 import com.java.fx.Panel.MainPanel;
 import com.java.fx.Util.*;
-import com.java.fx.Util.System;
+import com.java.fx.Util.SystemUtil;
 import com.java.fx.model.Dictionary;
 import com.java.fx.model.JsonEntity.Conf;
 import javafx.scene.control.Label;
@@ -10,9 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * @author qiaojiyuan
@@ -38,7 +36,7 @@ public class SignInAction {
     }
 
     public void signIn(TextField testFiledUsername, TextField textFiledPassword, TextField textFiledPasswordSure, Label labelError) {
-        Local.username = testFiledUsername.getText();
+        String username = testFiledUsername.getText();
         String password = textFiledPassword.getText();
         if (!password.equals(textFiledPasswordSure.getText())) {
             labelError.setText("两次输入密码不一致！");
@@ -49,7 +47,7 @@ public class SignInAction {
             return;
         }
 
-        File userFord = new File(System.getUserRootPath());
+        File userFord = new File(SystemUtil.getUserRootPath(username));
         if (userFord.exists()) {
             labelError.setText("用户名已存在！");
             if (!isLoginError) {
@@ -59,15 +57,17 @@ public class SignInAction {
             return;
         }
 
-        File accountParent = new File(System.getAccountRootPath());
         if (userFord.mkdir()) {
-            File conf = new File(System.getConfPath());
+            File conf = new File(SystemUtil.getConfPath(username));
             DataUtil.write(conf, Conf.defaultConf(StringUtil.encrypt(password)), false);
-            if (accountParent.mkdir()) {
-                File plan = new File(System.getPlanPath());
-                DataUtil.write(plan, new ArrayList<>(), false);
-                File record = new File(System.getRecordPath());
-                DataUtil.write(record, new ArrayList<>(), false);
+            for (Dictionary acc : DataUtil.DEFAULT_ACCOUNT) {
+                File accountParent = new File(SystemUtil.getAccountRootPath(username, acc.getValue()));
+                if (accountParent.mkdir()) {
+                    File plan = new File(SystemUtil.getPlanPath(username, acc.getValue()));
+                    DataUtil.write(plan, new ArrayList<>(), false);
+                    File record = new File(SystemUtil.getRecordPath(username, acc.getValue()));
+                    DataUtil.write(record, new ArrayList<>(), false);
+                }
             }
             labelError.setText("注册成功！");
             if (!isLoginError) {

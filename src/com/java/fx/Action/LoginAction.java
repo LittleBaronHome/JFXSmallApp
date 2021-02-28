@@ -5,7 +5,7 @@ import com.java.fx.Panel.IndexPanel;
 import com.java.fx.Panel.MainPanel;
 import com.java.fx.Panel.SignInPanel;
 import com.java.fx.Util.*;
-import com.java.fx.Util.System;
+import com.java.fx.Util.SystemUtil;
 import com.java.fx.model.JsonEntity.Conf;
 import com.java.fx.model.Plan;
 import com.java.fx.model.Record;
@@ -30,8 +30,7 @@ public class LoginAction {
     public void login(TextField testFiledUsername, TextField textFiledPassword, Label labelError) {
         String username = testFiledUsername.getText();
         String password = textFiledPassword.getText();
-        Local.username = username;
-        File confFile = new File(System.getConfPath());
+        File confFile = new File(SystemUtil.getConfPath(username));
         if (!confFile.exists()) {
             labelError.setText("用户名不存在，请联系管理员！");
             if (!isLoginError) {
@@ -45,9 +44,11 @@ public class LoginAction {
             if (p.equals(StringUtil.encrypt(password))) {
                 system.setUpdateTimeMillis(java.lang.System.currentTimeMillis());
                 Local.system = system;
-
-                File planFile = new File(System.getPlanPath());
-                File recordFile = new File(System.getRecordPath());
+                Local.username = username;
+                Local.account = system.getAccount().get(0);
+                Local.accountId = Local.account.getId();
+                File planFile = new File(SystemUtil.getPlanPath());
+                File recordFile = new File(SystemUtil.getRecordPath());
                 if (!planFile.exists() || !recordFile.exists()) {
                     labelError.setText("用户名数据文件不存在！" );
                     if (!isLoginError) {

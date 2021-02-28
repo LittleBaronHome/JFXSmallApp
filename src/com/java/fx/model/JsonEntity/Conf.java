@@ -1,11 +1,15 @@
 package com.java.fx.model.JsonEntity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.java.fx.Util.DataUtil;
 import com.java.fx.model.Dictionary;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 
 /**
@@ -20,7 +24,7 @@ public class Conf {
     @JsonProperty("u")
     private Long updateTimeMillis;
     @JsonProperty("a")
-    private List<Dictionary> account;
+    private List<Dictionary<BigDecimal>> account;
     @JsonProperty("ic")
     private List<Dictionary> incomeClassify;
     @JsonProperty("pc")
@@ -29,7 +33,7 @@ public class Conf {
     public Conf() {
     }
 
-    public Conf(String password, Long createTimeMillis, List<Dictionary> account) {
+    public Conf(String password, Long createTimeMillis, List<Dictionary<BigDecimal>> account) {
         this.password = password;
         this.createTimeMillis = createTimeMillis;
         this.account = account;
@@ -39,18 +43,9 @@ public class Conf {
         Conf conf = new Conf();
         conf.password = password;
         conf.createTimeMillis = System.currentTimeMillis();
-        conf.account = Collections.singletonList(new Dictionary(1L, "default", "默认账户"));
-        conf.incomeClassify = Arrays.asList(
-                new Dictionary(1L, "salary", "工资"),
-                new Dictionary(2L, "others", "其他")
-                );
-        conf.payClassify = Arrays.asList(
-                new Dictionary(1L, "meal", "餐费"),
-                new Dictionary(2L, "traffic", "交通费"),
-                new Dictionary(3L, "phone", "话费"),
-                new Dictionary(4L, "network", "网费"),
-                new Dictionary(5L, "others", "其他")
-                );
+        conf.account = DataUtil.DEFAULT_ACCOUNT;
+        conf.incomeClassify = DataUtil.DEFAULT_INCOME_CLASSIFY;
+        conf.payClassify = DataUtil.DEFAULT_PAY_CLASSIFY;
 
         return conf;
     }
@@ -79,11 +74,11 @@ public class Conf {
         this.updateTimeMillis = updateTimeMillis;
     }
 
-    public List<Dictionary> getAccount() {
+    public List<Dictionary<BigDecimal>> getAccount() {
         return account;
     }
 
-    public void setAccount(List<Dictionary> account) {
+    public void setAccount(List<Dictionary<BigDecimal>> account) {
         this.account = account;
     }
 
@@ -101,5 +96,9 @@ public class Conf {
 
     public void setPayClassify(List<Dictionary> payClassify) {
         this.payClassify = payClassify;
+    }
+
+    public Dictionary getAccount(String text) {
+        return account.stream().filter(item -> text.equals(item.getText())).collect(Collectors.toList()).get(0);
     }
 }

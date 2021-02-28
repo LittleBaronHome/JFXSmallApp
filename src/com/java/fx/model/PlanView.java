@@ -1,27 +1,19 @@
 package com.java.fx.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.java.fx.Util.Local;
-
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Record {
-    private Long id;
-    @JsonProperty("account_id")
-    private Long accountId;
+public class PlanView {
     private Date date;
     private String type;
     private String classify;
     private BigDecimal money;
     private String note;
 
-    public Record() {
+    public PlanView() {
     }
 
-    public Record(Long accountId, Date date, String type, String classify, BigDecimal money, String note) {
-        this.id = Local.recordIdMax + 1L;
-        this.accountId = accountId;
+    public PlanView(Long accountId, Date date, String type, String classify, BigDecimal money, String note) {
         this.date = date;
         this.type = type;
         this.classify = classify;
@@ -29,21 +21,6 @@ public class Record {
         this.note = note;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
-    }
 
     public Date getDate() {
         return date;

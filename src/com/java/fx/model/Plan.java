@@ -1,6 +1,7 @@
 package com.java.fx.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.java.fx.Util.Local;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -10,7 +11,7 @@ public class Plan {
     @JsonProperty("account_id")
     private Long accountId;
     private String interval;
-    private Date date;
+    private String date;
     private String type;
     private String classify;
     private BigDecimal money;
@@ -19,7 +20,8 @@ public class Plan {
     public Plan() {
     }
 
-    public Plan(Long accountId, String interval, Date date, String type, String classify, BigDecimal money, String note) {
+    public Plan(Long accountId, String interval, String date, String type, String classify, BigDecimal money, String note) {
+        this.id = Local.planIdMax + 1L;
         this.accountId = accountId;
         this.interval = interval;
         this.date = date;
@@ -53,11 +55,11 @@ public class Plan {
         this.interval = interval;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

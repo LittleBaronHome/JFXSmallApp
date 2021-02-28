@@ -1,9 +1,10 @@
 package com.java.fx.model;
 
-public class Dictionary {
+public class Dictionary<T> {
     private Long id;
     private String value;
     private String text;
+    private T data;
 
     public Dictionary() {
     }
@@ -12,6 +13,13 @@ public class Dictionary {
         this.id = id;
         this.value = value;
         this.text = text;
+    }
+
+    public Dictionary(Long id, String value, String text, T data) {
+        this.id = id;
+        this.value = value;
+        this.text = text;
+        this.data = data;
     }
 
     public Long getId() {
@@ -36,6 +44,14 @@ public class Dictionary {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 
     @Override
