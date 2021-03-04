@@ -1,12 +1,12 @@
-package com.java.fx.Panel.Modal;
+package com.java.fx.Panel.Dialog;
 
 import com.java.fx.Panel.IndexPanel;
+import com.java.fx.Panel.Modal.SystemModal;
 import com.java.fx.Panel.Prompt.ErrorPromptPanel;
 import com.java.fx.Util.DataUtil;
 import com.java.fx.Util.Local;
 import com.java.fx.Util.StringUtil;
 import com.java.fx.model.Dictionary;
-import com.java.fx.model.Plan;
 import com.java.fx.model.Record;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * @author qiaojiyuan
  * @date 2021/1/28
  */
-public class RecordModalPanel extends SystemModal{
+public class RecordModalPanel extends SystemModal {
     private Record record;
 
     public RecordModalPanel(Stage parent) {

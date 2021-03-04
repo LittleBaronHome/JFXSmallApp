@@ -1,5 +1,6 @@
-package com.java.fx.Panel.Modal;
+package com.java.fx.Panel.Dialog;
 
+import com.java.fx.Panel.Modal.SystemModal;
 import com.java.fx.Util.DataUtil;
 import com.java.fx.Util.StringUtil;
 import javafx.scene.control.*;
@@ -14,7 +15,7 @@ import java.time.LocalDate;
  * @author qiaojiyuan
  * @date 2021/1/28
  */
-public class PlanViewInfoPanel extends SystemModal{
+public class PlanViewInfoPanel extends SystemModal {
 
     public PlanViewInfoPanel(Stage parent) {
         super(parent);
@@ -79,18 +80,18 @@ public class PlanViewInfoPanel extends SystemModal{
         AnchorPane.setTopAnchor(datePickerDateEnd, startTop + (index * line));
         datePickerDateEnd.setDisable(true);
 
-        tg.selectedToggleProperty().addListener((ov, old_toggle, new_toggle) -> {
-            switch (((RadioButton) new_toggle).getText()) {
-                case DataUtil.VIEW_CURRENT_YEAR: case DataUtil.VIEW_CURRENT_MONTH:
-                    datePickerDateStart.setDisable(true);
-                    datePickerDateEnd.setDisable(true);
-                    break;
-                case DataUtil.VIEW_CUSTOMER:
-                    datePickerDateStart.setDisable(false);
-                    datePickerDateEnd.setDisable(false);
-                    break;
-            }
-        });
+//        tg.selectedToggleProperty().addListener((ov, old_toggle, new_toggle) -> {
+//            switch (((RadioButton) new_toggle).getText()) {
+//                case DataUtil.VIEW_CURRENT_YEAR: case DataUtil.VIEW_CURRENT_MONTH:
+//                    datePickerDateStart.setDisable(true);
+//                    datePickerDateEnd.setDisable(true);
+//                    break;
+//                case DataUtil.VIEW_CUSTOMER:
+//                    datePickerDateStart.setDisable(false);
+//                    datePickerDateEnd.setDisable(false);
+//                    break;
+//            }
+//        });
 
         ac.getChildren().addAll(labelInitMoney, labelViewDate, labelViewDateRange,
                 initMoney, viewYear, viewMonth, viewCustomer, datePickerDateStart, labelTo, datePickerDateEnd);

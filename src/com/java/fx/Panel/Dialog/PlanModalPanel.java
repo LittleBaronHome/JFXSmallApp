@@ -1,6 +1,7 @@
-package com.java.fx.Panel.Modal;
+package com.java.fx.Panel.Dialog;
 
 import com.java.fx.Panel.IndexPanel;
+import com.java.fx.Panel.Modal.SystemModal;
 import com.java.fx.Panel.Prompt.ErrorPromptPanel;
 import com.java.fx.Util.DataUtil;
 import com.java.fx.Util.Local;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
  * @author qiaojiyuan
  * @date 2021/1/28
  */
-public class PlanModalPanel extends SystemModal{
+public class PlanModalPanel extends SystemModal {
     private Plan plan;
     private DatePicker datePickerDate;
     private ChoiceBox dateWeekCB;

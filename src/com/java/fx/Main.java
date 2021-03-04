@@ -27,11 +27,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
-//        StyleManager.getInstance().addUserAgentStylesheet(SystemUtil.rootPath + "Resources/main.css");
         Main.primaryStage = primaryStage;
         Main.primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/com/java/fx/Resources/60044.gif")));
         PanelUtil.show(new LoginPanel(), MainPanel.LOGIN_PANEL);
-//        PanelUtil.create(new IndexPanel(), MainPanel.INDEX_PANEL);
     }
 
     @Override

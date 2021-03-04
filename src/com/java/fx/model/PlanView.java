@@ -1,6 +1,9 @@
 package com.java.fx.model;
 
+import com.java.fx.Util.StringUtil;
+
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class PlanView {
@@ -19,6 +22,14 @@ public class PlanView {
         this.classify = classify;
         this.money = money;
         this.note = note;
+    }
+
+    public PlanView(Plan plan, LocalDate date) {
+        this.date = StringUtil.stringToDate(date);
+        this.type = plan.getType();
+        this.classify = plan.getClassify();
+        this.money = plan.getMoney();
+        this.note = plan.getNote();
     }
 
 
