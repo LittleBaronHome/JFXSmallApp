@@ -89,6 +89,10 @@ public class PanelUtil {
         sceneStageMap.get(key).transfer(Main.primaryStage);
     }
 
+    public static StageInfo getSceneStage(String key) {
+        return sceneStageMap.get(key);
+    }
+
     public static boolean hasScene(String key) {
         return sceneMap.containsKey(key);
     }
@@ -131,5 +135,9 @@ public class PanelUtil {
         if (promptMap.size() == 0) {
             promptIndex = 0;
         }
+    }
+
+    public static void refreshSize() {
+
     }
 }

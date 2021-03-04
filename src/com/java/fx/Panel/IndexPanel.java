@@ -6,6 +6,7 @@ import com.java.fx.Panel.Dialog.RecordModalPanel;
 import com.java.fx.Panel.Prompt.ErrorPromptPanel;
 import com.java.fx.Util.DataUtil;
 import com.java.fx.Util.Local;
+import com.java.fx.Util.PanelUtil;
 import com.java.fx.Util.StringUtil;
 import com.java.fx.model.Dictionary;
 import com.java.fx.model.Plan;
@@ -35,6 +36,7 @@ import java.util.List;
  * @date 2021/1/28
  */
 public class IndexPanel extends MainPanel {
+    private BorderPane bp;
     private Button addPlan = new Button("新增计划");
     private Button editPlan = new Button("编辑计划");
     private Button deletePlan = new Button("删除计划");
@@ -43,6 +45,7 @@ public class IndexPanel extends MainPanel {
     private Button addRecord = new Button("新增记录");
     private Button editRecord = new Button("编辑记录");
     private Button deleteRecord = new Button("删除记录");
+    private Button showPlan = new Button("展示计划");
     private Label initMoneyLabel = new Label("初始金额: ");
     private TextField initMoney = new TextField();
     private static Label currentMoney = new Label();
@@ -53,14 +56,14 @@ public class IndexPanel extends MainPanel {
     private DatePicker datePickerDateEnd = new DatePicker(LocalDate.now().with(TemporalAdjusters.lastDayOfMonth()));
     private Label labelTo = new Label("至:");
     private ToggleGroup tg = new ToggleGroup();
-    RadioButton viewYear  = new RadioButton(DataUtil.VIEW_CURRENT_YEAR);
-    RadioButton viewMonth = new RadioButton(DataUtil.VIEW_CURRENT_MONTH);
-    RadioButton viewCustomer = new RadioButton(DataUtil.VIEW_CUSTOMER);
+    private RadioButton viewYear  = new RadioButton(DataUtil.VIEW_CURRENT_YEAR);
+    private RadioButton viewMonth = new RadioButton(DataUtil.VIEW_CURRENT_MONTH);
+    private RadioButton viewCustomer = new RadioButton(DataUtil.VIEW_CUSTOMER);
     private List<PlanView> planViews = new ArrayList<>();
 
     public static TableView<Plan> planTV;
     public static TableView<Record> recordTV;
-    public static TableView<PlanView> planViewTV;
+    private static TableView<PlanView> planViewTV;
 
     private ChoiceBox accountListCb;
     private ObservableList<Plan> planListOL;
@@ -70,10 +73,11 @@ public class IndexPanel extends MainPanel {
     private AnchorPane left = new AnchorPane();
     private AnchorPane right = new AnchorPane();
     private boolean isViewPlan = false;
+    private boolean isShowPlan = false;
 
     @Override
     public Scene init() {
-        BorderPane bp = new BorderPane();
+        bp = new BorderPane();
         Scene scene = new Scene(bp);
         List<Dictionary<BigDecimal>> accountList = Local.system.getAccount();
 
@@ -210,6 +214,8 @@ public class IndexPanel extends MainPanel {
         AnchorPane.setTopAnchor(editRecord, 10.0);
         AnchorPane.setLeftAnchor(deleteRecord, 270.0);
         AnchorPane.setTopAnchor(deleteRecord, 10.0);
+        AnchorPane.setLeftAnchor(showPlan, 340.0);
+        AnchorPane.setTopAnchor(showPlan, 10.0);
         // 左第二排
         AnchorPane.setTopAnchor(initMoneyLabel, 48.0);
         AnchorPane.setLeftAnchor(initMoneyLabel, 10.0);
@@ -220,7 +226,7 @@ public class IndexPanel extends MainPanel {
         // 记录列表
         AnchorPane.setLeftAnchor(recordTV, 10.0);
         AnchorPane.setTopAnchor(recordTV, 80.0);
-        left.getChildren().addAll(accountListCb, addRecord, editRecord, deleteRecord,
+        left.getChildren().addAll(accountListCb, addRecord, editRecord, deleteRecord, showPlan,
                 initMoneyLabel, initMoney, currentMoney,
                 recordTV);
 
@@ -263,17 +269,16 @@ public class IndexPanel extends MainPanel {
                 planTV);
 
         bp.setLeft(left);
-        bp.setCenter(right);
-        setWidth(1150);
+//        bp.setCenter(right);
+        setWidth(585);
         setHeight(900);
-        setTitle("Index");
+        setTitle("傻猪记账本");
         setResizable(true);
         return scene;
     }
 
     @Override
     public void action() {
-//        IndexAction indexAction = new IndexAction();
         accountListCb.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
             if (!oldValue.equals(newValue)) {
                 Local.persistence();
@@ -331,6 +336,24 @@ public class IndexPanel extends MainPanel {
                 Local.removePlan(plan);
             }
         });
+        showPlan.setOnAction(e -> {
+            if (isShowPlan) {
+                bp.setCenter(null);
+                PanelUtil.getSceneStage("index").setWidth(585);
+                PanelUtil.getCurrentScene().setRoot(bp);
+                PanelUtil.show("index");
+                isShowPlan = false;
+                showPlan.setText("展示计划");
+            } else {
+                bp.setCenter(right);
+                PanelUtil.getCurrentScene().setRoot(bp);
+                PanelUtil.getSceneStage("index").setWidth(1150);
+                PanelUtil.show("index");
+                isShowPlan = true;
+                showPlan.setText("隐藏计划");
+            }
+        });
+
         viewPlan.setOnAction(e -> {
             if (isViewPlan) {
                 addPlan.setDisable(false);
@@ -346,13 +369,14 @@ public class IndexPanel extends MainPanel {
                 viewCustomer.setDisable(true);
                 datePickerDateStart.setDisable(true);
                 datePickerDateEnd.setDisable(true);
+                planViewCurrentMoney.setText("预计金额: ");
 
                 isViewPlan = false;
             } else {
                 addPlan.setDisable(true);
                 editPlan.setDisable(true);
                 deletePlan.setDisable(true);
-                viewPlan.setText("查看计划");
+                viewPlan.setText("制定计划");
                 right.getChildren().remove(planTV);
                 right.getChildren().add(planViewTV);
 

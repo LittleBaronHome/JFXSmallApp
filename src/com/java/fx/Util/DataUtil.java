@@ -29,12 +29,13 @@ public class DataUtil {
             new Dictionary(3L, "others", "其他")
     );
     public static final List<Dictionary> DEFAULT_PAY_CLASSIFY = Arrays.asList(
-            new Dictionary(1L, "meal", "餐费"),
+            new Dictionary(1L, "meal", "生活费"),
             new Dictionary(2L, "traffic", "交通费"),
             new Dictionary(3L, "phone", "话费"),
             new Dictionary(4L, "network", "网费"),
             new Dictionary(5L, "rent", "房租"),
-            new Dictionary(6L, "others", "其他")
+            new Dictionary(6L, "rent", "水电费"),
+            new Dictionary(7L, "others", "其他")
     );
     public static final List<String> INTERVAL = Arrays.asList("月度", "周度", "自定义");
     public static final String INTERVAL_MONTH = "月度";
