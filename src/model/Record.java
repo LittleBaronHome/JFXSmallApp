@@ -15,11 +15,12 @@ public class Record {
     private String classify;
     private BigDecimal money;
     private String note;
+    private boolean isReckonInTotal;
 
     public Record() {
     }
 
-    public Record(Long accountId, Date date, String type, String classify, BigDecimal money, String note) {
+    public Record(Long accountId, Date date, String type, String classify, BigDecimal money, String note, boolean isReckonInTotal) {
         this.id = Local.recordIdMax + 1L;
         this.accountId = accountId;
         this.date = date;
@@ -27,6 +28,7 @@ public class Record {
         this.classify = classify;
         this.money = money;
         this.note = note;
+        this.isReckonInTotal = isReckonInTotal;
     }
 
     public Long getId() {
@@ -83,5 +85,13 @@ public class Record {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public boolean isReckonInTotal() {
+        return isReckonInTotal;
+    }
+
+    public void setReckonInTotal(boolean reckonInTotal) {
+        isReckonInTotal = reckonInTotal;
     }
 }

@@ -162,4 +162,15 @@ public class StringUtil {
     public static boolean isMoney(String str) {
         return !isEmpty(str) && Pattern.matches(PATTERN_MONEY, str);
     }
+
+    public static String join(String[] str, String sp, int startIndex) {
+        String res = "";
+        for (;startIndex < str.length;startIndex++) {
+            res += str[startIndex];
+            if (startIndex < str.length - 1) {
+                res += sp;
+            }
+        }
+        return res;
+    }
 }

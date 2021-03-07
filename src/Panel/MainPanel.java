@@ -11,6 +11,7 @@ public class MainPanel {
     public static final String LOGIN_PANEL = "login";
     public static final String SIGN_PANEL = "sign";
     public static final String INDEX_PANEL = "index";
+    public static final String UPDATED_PANEL = "updated";
 
     private double width;
     private double height;

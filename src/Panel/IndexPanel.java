@@ -503,6 +503,9 @@ public class IndexPanel extends MainPanel {
     public static void refreshCurrentMoney() {
         BigDecimal currentM = Local.account.getData();
         for (Record r : Local.record) {
+            if (!r.isReckonInTotal()) {
+                continue;
+            }
             if (DataUtil.INCOME.equals(r.getType())) {
                 currentM = currentM.add(r.getMoney());
             }

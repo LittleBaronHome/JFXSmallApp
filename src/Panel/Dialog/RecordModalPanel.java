@@ -55,6 +55,7 @@ public class RecordModalPanel extends SystemModal {
         Label labelMoney = new Label("金额:");
         AnchorPane.setLeftAnchor(labelMoney, 35.0);
         AnchorPane.setTopAnchor(labelMoney, startTop + (index++ * line));
+        index++;
         Label labelNote = new Label("备注:");
         AnchorPane.setLeftAnchor(labelNote, 35.0);
         AnchorPane.setTopAnchor(labelNote, startTop + (index++ * line));
@@ -103,6 +104,11 @@ public class RecordModalPanel extends SystemModal {
         AnchorPane.setLeftAnchor(testFiledMoney, 85.0);
         AnchorPane.setTopAnchor(testFiledMoney, startTop + (index++ * line));
 
+        CheckBox isReckonInTotal = new CheckBox("是否纳入统计");
+        isReckonInTotal.setSelected(true);
+        AnchorPane.setLeftAnchor(isReckonInTotal, 85.0);
+        AnchorPane.setTopAnchor(isReckonInTotal, startTop + (index++ * line));
+
         TextField testFiledNote = new TextField();
         AnchorPane.setLeftAnchor(testFiledNote, 85.0);
         AnchorPane.setTopAnchor(testFiledNote, startTop + (index++ * line));
@@ -118,10 +124,11 @@ public class RecordModalPanel extends SystemModal {
             cbClassify.setValue(record.getClassify());
             testFiledMoney.setText(String.valueOf(record.getMoney()));
             testFiledNote.setText(record.getNote());
+            isReckonInTotal.setSelected(record.isReckonInTotal());
         }
 
         ac.getChildren().addAll(labelDate, labelType, labelClassify, labelMoney, labelNote,
-                datePickerDate, income, pay, cbClassify, testFiledMoney, testFiledNote);
+                datePickerDate, income, pay, cbClassify, testFiledMoney, isReckonInTotal, testFiledNote);
         ac.setPrefWidth(width);
         height = 350;
         ac.setPrefHeight(height);
@@ -141,7 +148,8 @@ public class RecordModalPanel extends SystemModal {
                         ((RadioButton) tg.getSelectedToggle()).getText(),
                         String.valueOf(cbClassify.getValue()),
                         new BigDecimal(testFiledMoney.getText()),
-                        testFiledNote.getText()
+                        testFiledNote.getText(),
+                        isReckonInTotal.isSelected()
                 );
                 Local.addRecord(newRecord);
                 IndexPanel.recordTV.getItems().add(newRecord);
@@ -151,6 +159,7 @@ public class RecordModalPanel extends SystemModal {
                 record.setClassify(String.valueOf(cbClassify.getValue()));
                 record.setMoney(new BigDecimal(testFiledMoney.getText()));
                 record.setNote(testFiledNote.getText());
+                record.setReckonInTotal(isReckonInTotal.isSelected());
                 IndexPanel.recordTV.refresh();
             }
             IndexPanel.refreshCurrentMoney();
