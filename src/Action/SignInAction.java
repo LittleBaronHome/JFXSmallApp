@@ -59,12 +59,12 @@ public class SignInAction {
             return;
         }
 
-        if (userFord.mkdir()) {
+        if (userFord.mkdirs()) {
             File conf = new File(SystemUtil.getConfPath(username));
             DataUtil.write(conf, Conf.defaultConf(StringUtil.encrypt(password)), false);
             for (Dictionary acc : DataUtil.DEFAULT_ACCOUNT) {
                 File accountParent = new File(SystemUtil.getAccountRootPath(username, acc.getValue()));
-                if (accountParent.mkdir()) {
+                if (accountParent.mkdirs()) {
                     File plan = new File(SystemUtil.getPlanPath(username, acc.getValue()));
                     DataUtil.write(plan, new ArrayList<>(), false);
                     File record = new File(SystemUtil.getRecordPath(username, acc.getValue()));
